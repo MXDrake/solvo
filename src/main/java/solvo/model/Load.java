@@ -17,6 +17,14 @@ public class Load {
 	@JoinColumn(name = "load_id")
 	private Location location;
 
+	public Load(){
+
+	}
+
+	public Load(Location location){
+		this.location = location;
+	}
+
 	public Integer getId() {
 		return id;
 	}

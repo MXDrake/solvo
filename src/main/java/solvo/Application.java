@@ -1,5 +1,6 @@
 package solvo;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -9,9 +10,13 @@ import solvo.service.LoadService;
 import solvo.service.LoadServiceImpl;
 import solvo.service.LocationService;
 import solvo.service.LocationServiceImpl;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 @SpringBootApplication
-public class Application  {
+public class Application {
 
 
 
@@ -45,10 +50,28 @@ public class Application  {
 		load.setLoad(location);
 		loadService.save(load);
 
+		Scanner scanner = new Scanner(System.in);
+		String command="";
+		while (!(command = scanner.next()).equals("end")){
+//			String string = scanner.nextLine();
+//			String[] strings = string.split(" ");
+
+			switch (command){
+				case "Добавить": {
+					int count = scanner.nextInt();
+					List<Load> loadList = new ArrayList<>();
+					for (int i = 0; i < count; i++) {
+						loadService.save(new Load(location));
+					}
 
 
+				}
 
+			}
+
+			if ( command.equals("max")){
+				System.out.println("OGOGOG");
+			}
+		}
 	}
-
-
 }
