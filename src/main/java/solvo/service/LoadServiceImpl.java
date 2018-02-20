@@ -6,10 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import solvo.model.Load;
 import solvo.model.Location;
 import solvo.repository.LoadRepository;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.File;
 
 @Service
 public class LoadServiceImpl implements LoadService {
