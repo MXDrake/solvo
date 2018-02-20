@@ -31,7 +31,7 @@ public class Application {
 		LocationService locationService = ctx.getBean("locationServiceImpl", LocationServiceImpl.class);
 
 		Scanner scanner = new Scanner(System.in);
-		String command = "";
+		String command;
 		String leftAlignFormat = "| %-28s | %-17s |%n";
 
 		System.out.println(HELP);
@@ -54,6 +54,7 @@ public class Application {
 						break;
 					} catch (Exception e) {
 						System.out.println("Неверный формат");
+						break;
 					}
 				}
 				case "ПОКАЗАТЬ": {

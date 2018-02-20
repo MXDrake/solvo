@@ -13,7 +13,7 @@ public class Location {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@XmlAttribute
-	private Integer id;
+	private Long id;
 
 	@XmlAttribute
 	@Column(name = "name")
@@ -29,11 +29,11 @@ public class Location {
 		this.name = name;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -35,15 +35,4 @@ public class LoadServiceImpl implements LoadService {
 		return loadRepository.countByLocation(location);
 	}
 
-	@Override
-	public void exportXML(Load load) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(Load.class);
-		Marshaller m = context.createMarshaller();
-		m.marshal(load, new File("employee.xml"));
-	}
-
-	@Override
-	public Load get(Long id) {
-		return loadRepository.findOne(id);
-	}
 }
