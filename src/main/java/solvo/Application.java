@@ -49,11 +49,12 @@ public class Application {
 							loadService.save(new Load(location));
 						}
 						System.out.println("Груз добавлен");
-						break;
+
 					} catch (Exception e) {
 						System.out.println("Неверный формат");
-						break;
+
 					}
+					break;
 				}
 				case "ПОКАЗАТЬ": {
 					Scanner scannerLocationName = new Scanner(scanner.nextLine());
