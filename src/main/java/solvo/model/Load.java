@@ -25,12 +25,12 @@ public class Load {
 	private Location location;
 
 	public Load() {
-		this.name =RandomStringUtils.randomAlphanumeric(10);
+		this.name = RandomStringUtils.randomAlphanumeric(10);
 	}
 
 	public Load(Location location) {
 		this.location = location;
-		this.name =RandomStringUtils.randomAlphanumeric(10);
+		this.name = RandomStringUtils.randomAlphanumeric(10);
 	}
 
 	public Long getId() {

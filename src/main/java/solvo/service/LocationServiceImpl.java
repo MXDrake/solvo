@@ -49,5 +49,4 @@ public class LocationServiceImpl implements LocationService {
 			e.printStackTrace();
 		}
 	}
-
 }

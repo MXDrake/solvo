@@ -1,6 +1,5 @@
 package solvo;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +15,7 @@ import java.util.Scanner;
 @SpringBootApplication
 public class Application {
 
-	static final String HELP =
+	private static final String HELP =
 			"Команды: \n Добавление грузов в ячеку : Add [Кол-во грузов] [Имя ячейки]   \n " + "Показать" + " " +
 			"содержание ячеек : Show [Имя ячейки1] [Имя ячейки2] ... \n Экспорт базы в xml: Export [Имя файла] \n" +
 			" Выход из программы : Exit \n Помощь: Help \r";
@@ -39,6 +38,7 @@ public class Application {
 			switch (command.toUpperCase()) {
 				case "ADD": {
 					try {
+						Scanner scannerAddLine = new Scanner(scanner.nextLine());
 						int count = scanner.nextInt();
 						String locationName = scanner.next();
 						Location location = locationService.getByName(locationName);
@@ -53,7 +53,6 @@ public class Application {
 
 					} catch (Exception e) {
 						System.out.println("Неверный формат");
-
 					}
 					break;
 				}
