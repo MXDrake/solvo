@@ -15,21 +15,16 @@ import java.util.Scanner;
 @SpringBootApplication
 public class Application {
 
-	static final String help =
+	static final String HELP =
 			"Команды: \n Добавление грузов в ячеку : Добавить [Кол-во грузов] [Имя ячейки]   \n " + "Показать" + " " +
-			"содержание ячеек : Показать [Имя ячейки1] [Имя ячейки2] ... \n Выход из программы : Выход \n Помощь: " +
+			"содержание ячеек : Показать [Имя ячейки1] [Имя ячейки2] ... \n Экспорт базы в xml: Export [Имя файла] \n" +
+			" Выход из " +
+			"программы : Выход \n Помощь: " +
 			"help \r";
 
 	public static void main(String[] args) throws JAXBException {
 
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
-//	  		String[] beanNames = ctx.getBeanDefinitionNames();
-//	  		    Arrays.sort(beanNames);
-//	  		    System.out.println("***********************");
-//	  		    for (String beanName : beanNames) {
-//	  		        System.out.println(beanName);
-//	  		    }
-//	  		    System.out.println("***********************");
 
 		LoadService loadService = ctx.getBean("loadServiceImpl", LoadServiceImpl.class);
 
@@ -39,7 +34,7 @@ public class Application {
 		String command = "";
 		String leftAlignFormat = "| %-28s | %-17s |%n";
 
-		System.out.println(help);
+		System.out.println(HELP);
 
 		while (!(command = scanner.next()).equalsIgnoreCase("выход")) {
 			switch (command.toUpperCase()) {
@@ -55,6 +50,7 @@ public class Application {
 						for (int i = 0; i < count; i++) {
 							loadService.save(new Load(location));
 						}
+						System.out.println("Груз добавлен");
 						break;
 					} catch (Exception e) {
 						System.out.println("Неверный формат");
@@ -75,13 +71,23 @@ public class Application {
 					System.out.format("+--------------------------------------------------|%n");
 					break;
 				}
-				case "HELP":{
-					System.out.println(help);
+				case "HELP": {
+					System.out.println(HELP);
+					break;
 				}
-				case "EXPORT":{
-					//Load load = loadService.get(1l);
-					locationService.exportXML();
+				case "EXPORT": {
+					Scanner scannerFileName = new Scanner(scanner.nextLine());
+					if (scannerFileName.hasNext()) {
+						String fileName = scannerFileName.next();
+
+						locationService.exportXML(fileName);
+					} else {
+						System.out.println("Введите имя файла");
+					}
+					break;
 				}
+				default:
+					scanner.nextLine();
 			}
 		}
 	}

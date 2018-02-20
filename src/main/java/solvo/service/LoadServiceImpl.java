@@ -14,8 +14,6 @@ import java.io.File;
 @Service
 public class LoadServiceImpl implements LoadService {
 
-
-
 	private LoadRepository loadRepository;
 
 	@Autowired
@@ -41,7 +39,7 @@ public class LoadServiceImpl implements LoadService {
 	public void exportXML(Load load) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(Load.class);
 		Marshaller m = context.createMarshaller();
-		m.marshal( load , new File("employee.xml"));
+		m.marshal(load, new File("employee.xml"));
 	}
 
 	@Override

@@ -1,31 +1,32 @@
 package solvo.model;
 
-import com.sun.istack.internal.NotNull;
-import org.springframework.context.annotation.Primary;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @Entity
 @Table(name = "load")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Load {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlAttribute
 	private Long id;
-	
-	@Column(name ="name", nullable = false, unique = true)
+
+	@XmlAttribute
+	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 
 	@ManyToOne
 	@JoinColumn(name = "load_id")
+	@XmlTransient
 	private Location location;
 
-	public Load(){
-
+	public Load() {
 	}
 
-	public Load(Location location){
+	public Load(Location location) {
 		this.location = location;
 	}
 
@@ -51,5 +52,29 @@ public class Load {
 
 	public void setLoad(Location load) {
 		this.location = load;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		Load load = (Load) o;
+
+		if (id != null ? !id.equals(load.id) : load.id != null)
+			return false;
+		if (name != null ? !name.equals(load.name) : load.name != null)
+			return false;
+		return location != null ? location.equals(load.location) : load.location == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (location != null ? location.hashCode() : 0);
+		return result;
 	}
 }
