@@ -39,8 +39,8 @@ public class Application {
 				case "ADD": {
 					try {
 						Scanner scannerAddLine = new Scanner(scanner.nextLine());
-						int count = scanner.nextInt();
-						String locationName = scanner.next();
+						int count = scannerAddLine.nextInt();
+						String locationName = scannerAddLine.next();
 						Location location = locationService.getByName(locationName);
 						if (location == null) {
 							location = new Location(locationName);
@@ -58,7 +58,7 @@ public class Application {
 				}
 				case "SHOW": {
 					Scanner scannerLocationName = new Scanner(scanner.nextLine());
-					System.out.format("|            Ячейка            | Кол-во грузов     |%n");
+					System.out.format("+            Ячейка            | Кол-во грузов     +%n");
 					while (scannerLocationName.hasNext()) {
 						String locationName = scannerLocationName.next();
 						Location location = locationService.getByName(locationName);
@@ -68,7 +68,7 @@ public class Application {
 							System.out.format(leftAlignFormat, locationName, "ячейка не найдена");
 						}
 					}
-					System.out.format("+--------------------------------------------------|%n");
+					System.out.format("+--------------------------------------------------+%n");
 					break;
 				}
 				case "HELP": {
