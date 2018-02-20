@@ -1,5 +1,6 @@
 package solvo.model;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
@@ -24,10 +25,12 @@ public class Load {
 	private Location location;
 
 	public Load() {
+		this.name =RandomStringUtils.randomAlphanumeric(10);
 	}
 
 	public Load(Location location) {
 		this.location = location;
+		this.name =RandomStringUtils.randomAlphanumeric(10);
 	}
 
 	public Long getId() {

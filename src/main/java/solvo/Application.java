@@ -1,5 +1,6 @@
 package solvo;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -16,9 +17,9 @@ import java.util.Scanner;
 public class Application {
 
 	static final String HELP =
-			"Команды: \n Добавление грузов в ячеку : Добавить [Кол-во грузов] [Имя ячейки]   \n " + "Показать" + " " +
-			"содержание ячеек : Показать [Имя ячейки1] [Имя ячейки2] ... \n Экспорт базы в xml: Export [Имя файла] \n" +
-			" Выход из программы : Выход \n Помощь: help \r";
+			"Команды: \n Добавление грузов в ячеку : Add [Кол-во грузов] [Имя ячейки]   \n " + "Показать" + " " +
+			"содержание ячеек : Show [Имя ячейки1] [Имя ячейки2] ... \n Экспорт базы в xml: Export [Имя файла] \n" +
+			" Выход из программы : Exit \n Помощь: Help \r";
 
 	public static void main(String[] args) throws JAXBException {
 
@@ -34,9 +35,9 @@ public class Application {
 
 		System.out.println(HELP);
 
-		while (!(command = scanner.next()).equalsIgnoreCase("выход")) {
+		while (!(command = scanner.next()).equalsIgnoreCase("exit")) {
 			switch (command.toUpperCase()) {
-				case "ДОБАВИТЬ": {
+				case "ADD": {
 					try {
 						int count = scanner.nextInt();
 						String locationName = scanner.next();
@@ -56,7 +57,7 @@ public class Application {
 					}
 					break;
 				}
-				case "ПОКАЗАТЬ": {
+				case "SHOW": {
 					Scanner scannerLocationName = new Scanner(scanner.nextLine());
 					System.out.format("|            Ячейка            | Кол-во грузов     |%n");
 					while (scannerLocationName.hasNext()) {

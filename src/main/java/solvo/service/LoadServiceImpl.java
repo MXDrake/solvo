@@ -1,5 +1,6 @@
 package solvo.service;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +21,12 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional
 	@Override
 	public void save(Load load) {
-		load.setName("Груз-");
-		loadRepository.save(load);
-		load.setName(load.getName() + load.getId());
-		loadRepository.save(load);
+		if (loadRepository.getByName(load.getName()) == null) {
+			loadRepository.save(load);
+		} else {
+			load.setName(RandomStringUtils.randomAlphanumeric(10));
+			save(load);
+		}
 	}
 
 	@Override
@@ -31,4 +34,8 @@ public class LoadServiceImpl implements LoadService {
 		return loadRepository.countByLocation(location);
 	}
 
+	@Override
+	public Load getByName(String name) {
+		return loadRepository.getByName(name);
+	}
 }

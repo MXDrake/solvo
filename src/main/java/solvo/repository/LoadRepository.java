@@ -6,4 +6,5 @@ import solvo.model.Location;
 public interface LoadRepository extends JpaRepository<Load, Long> {
 
 	Integer countByLocation(Location location);
+	Load getByName(String name);
 }

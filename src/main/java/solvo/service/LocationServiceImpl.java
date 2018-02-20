@@ -6,6 +6,7 @@ import solvo.config.XmlModel;
 import solvo.model.Location;
 import solvo.repository.LocationRepository;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.util.List;
@@ -13,10 +14,14 @@ import java.util.List;
 @Service
 public class LocationServiceImpl implements LocationService {
 
+	private final JAXBContext context = JAXBContext.newInstance(XmlModel.class);
+
+	private final Marshaller marshaller = context.createMarshaller();
+
 	private LocationRepository locationRepository;
 
 	@Autowired
-	public LocationServiceImpl(LocationRepository locationRepository) {
+	public LocationServiceImpl(LocationRepository locationRepository) throws JAXBException {
 		this.locationRepository = locationRepository;
 	}
 
@@ -34,16 +39,15 @@ public class LocationServiceImpl implements LocationService {
 	public void exportXML(String fileName) {
 		try {
 			List<Location> locationList = locationRepository.findAll();
-			JAXBContext context = JAXBContext.newInstance(XmlModel.class);
-			Marshaller m = context.createMarshaller();
 			File file = new File(fileName + ".xml");
 			XmlModel xmlModel = new XmlModel();
 			xmlModel.setLocations(locationList);
-			m.marshal(xmlModel, file);
+			marshaller.marshal(xmlModel, file);
 			System.out.println("Экспорт завершен");
 		} catch (Exception e) {
 			System.out.println("Ошибка при экспорте");
 			e.printStackTrace();
 		}
 	}
+
 }
