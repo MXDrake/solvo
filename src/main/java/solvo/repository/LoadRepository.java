@@ -1,7 +1,10 @@
 package solvo.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import solvo.model.Load;
 import org.springframework.data.repository.CrudRepository;
-public interface LoadRepository extends CrudRepository<Load, Long>{
+import solvo.model.Location;
+public interface LoadRepository extends JpaRepository<Load, Long> {
 
+	Integer countByLocation(Location location);
 }

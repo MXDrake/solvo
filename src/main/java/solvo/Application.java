@@ -1,6 +1,5 @@
 package solvo;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -10,23 +9,20 @@ import solvo.service.LoadService;
 import solvo.service.LoadServiceImpl;
 import solvo.service.LocationService;
 import solvo.service.LocationServiceImpl;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import javax.xml.bind.JAXBException;
 import java.util.Scanner;
 
 @SpringBootApplication
 public class Application {
 
+	static final String help =
+			"Команды: \n Добавление грузов в ячеку : Добавить [Кол-во грузов] [Имя ячейки]   \n " + "Показать" + " " +
+			"содержание ячеек : Показать [Имя ячейки1] [Имя ячейки2] ... \n Выход из программы : Выход \n Помощь: " +
+			"help \r";
 
+	public static void main(String[] args) throws JAXBException {
 
-
-	public static void main(String[] args) {
-
-//		SpringApplication.run(Application.class, args);
-
-		ApplicationContext ctx =
-			SpringApplication.run(Application.class, args);
+		ApplicationContext ctx = SpringApplication.run(Application.class, args);
 //	  		String[] beanNames = ctx.getBeanDefinitionNames();
 //	  		    Arrays.sort(beanNames);
 //	  		    System.out.println("***********************");
@@ -35,42 +31,57 @@ public class Application {
 //	  		    }
 //	  		    System.out.println("***********************");
 
-		LoadService loadService =
-			ctx.getBean("loadServiceImpl", LoadServiceImpl.class);
+		LoadService loadService = ctx.getBean("loadServiceImpl", LoadServiceImpl.class);
 
-		LocationService locationService =
-			ctx.getBean("locationServiceImpl", LocationServiceImpl.class);
-
-		Location location = new Location();
-		location.setName("home");
-		locationService.save(location);
-
-		Load load = new Load();
-		load.setName("Max");
-		load.setLoad(location);
-		loadService.save(load);
+		LocationService locationService = ctx.getBean("locationServiceImpl", LocationServiceImpl.class);
 
 		Scanner scanner = new Scanner(System.in);
-		String command="";
-		while (!(command = scanner.next()).equals("end")){
-//			String string = scanner.nextLine();
-//			String[] strings = string.split(" ");
+		String command = "";
+		String leftAlignFormat = "| %-28s | %-17s |%n";
 
-			switch (command){
-				case "Добавить": {
-					int count = scanner.nextInt();
-					List<Load> loadList = new ArrayList<>();
-					for (int i = 0; i < count; i++) {
-						loadService.save(new Load(location));
+		System.out.println(help);
+
+		while (!(command = scanner.next()).equalsIgnoreCase("выход")) {
+			switch (command.toUpperCase()) {
+				case "ДОБАВИТЬ": {
+					try {
+						int count = scanner.nextInt();
+						String locationName = scanner.next();
+						Location location = locationService.getByName(locationName);
+						if (location == null) {
+							location = new Location(locationName);
+							locationService.save(location);
+						}
+						for (int i = 0; i < count; i++) {
+							loadService.save(new Load(location));
+						}
+						break;
+					} catch (Exception e) {
+						System.out.println("Неверный формат");
 					}
-
-
 				}
-
-			}
-
-			if ( command.equals("max")){
-				System.out.println("OGOGOG");
+				case "ПОКАЗАТЬ": {
+					Scanner scannerLocationName = new Scanner(scanner.nextLine());
+					System.out.format("|            Ячейка            | Кол-во грузов     |%n");
+					while (scannerLocationName.hasNext()) {
+						String locationName = scannerLocationName.next();
+						Location location = locationService.getByName(locationName);
+						if (location != null) {
+							System.out.format(leftAlignFormat, location.getName(), loadService.count(location));
+						} else {
+							System.out.format(leftAlignFormat, locationName, "ячейка не найдена");
+						}
+					}
+					System.out.format("+--------------------------------------------------|%n");
+					break;
+				}
+				case "HELP":{
+					System.out.println(help);
+				}
+				case "EXPORT":{
+					//Load load = loadService.get(1l);
+					locationService.exportXML();
+				}
 			}
 		}
 	}

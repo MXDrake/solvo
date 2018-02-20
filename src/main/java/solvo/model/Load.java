@@ -1,6 +1,10 @@
 package solvo.model;
 
+import com.sun.istack.internal.NotNull;
+import org.springframework.context.annotation.Primary;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "load")
@@ -8,9 +12,9 @@ public class Load {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
-	@Column(name ="name")
+	private Long id;
+	
+	@Column(name ="name", nullable = false, unique = true)
 	private String name;
 
 	@ManyToOne
@@ -25,11 +29,11 @@ public class Load {
 		this.location = location;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
