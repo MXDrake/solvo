@@ -18,9 +18,7 @@ public class Application {
 	static final String HELP =
 			"Команды: \n Добавление грузов в ячеку : Добавить [Кол-во грузов] [Имя ячейки]   \n " + "Показать" + " " +
 			"содержание ячеек : Показать [Имя ячейки1] [Имя ячейки2] ... \n Экспорт базы в xml: Export [Имя файла] \n" +
-			" Выход из " +
-			"программы : Выход \n Помощь: " +
-			"help \r";
+			" Выход из программы : Выход \n Помощь: help \r";
 
 	public static void main(String[] args) throws JAXBException {
 

@@ -31,11 +31,6 @@ public class LocationServiceImpl implements LocationService {
 	}
 
 	@Override
-	public Integer count(String name) {
-		return null;
-	}
-
-	@Override
 	public void exportXML(String fileName) {
 		try {
 			List<Location> locationList = locationRepository.findAll();
