@@ -45,7 +45,5 @@ public class LocationServiceImpl implements LocationService {
 			System.out.println("Ошибка при экспорте");
 			e.printStackTrace();
 		}
-
 	}
-
 }
